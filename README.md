@@ -44,6 +44,29 @@ python main.py
 
 서버는 `http://localhost:12341`에서 실행됩니다.
 
+### 백그라운드에서 실행
+
+서버를 백그라운드에서 실행하려면:
+
+```bash
+# nohup을 사용하여 백그라운드 실행
+nohup python main.py > server.log 2>&1 &
+
+# 실행 중인 프로세스 확인
+ps aux | grep main.py
+
+# 서버 중지 (PID 확인 후)
+kill <PID>
+
+# 또는 포트로 프로세스 찾아서 중지
+lsof -ti:12341 | xargs kill -9
+```
+
+**로그 확인:**
+```bash
+tail -f server.log
+```
+
 ## API 사용법
 
 ### 1. 기본 정보 확인
