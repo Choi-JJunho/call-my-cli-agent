@@ -1,5 +1,5 @@
 import subprocess
-from typing import Literal
+from typing import Literal, Optional, Tuple
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uvicorn
@@ -15,10 +15,10 @@ class PromptRequest(BaseModel):
 class LLMResponse(BaseModel):
     model: str
     output: str
-    error: str | None = None
+    error: Optional[str] = None
 
 
-def execute_claude(prompt: str) -> tuple[str, str | None]:
+def execute_claude(prompt: str) -> Tuple[str, Optional[str]]:
     """Execute claude CLI command"""
     try:
         result = subprocess.run(
@@ -39,7 +39,7 @@ def execute_claude(prompt: str) -> tuple[str, str | None]:
         return "", f"Error executing claude: {str(e)}"
 
 
-def execute_gemini(prompt: str) -> tuple[str, str | None]:
+def execute_gemini(prompt: str) -> Tuple[str, Optional[str]]:
     """Execute gemini CLI command"""
     try:
         result = subprocess.run(
@@ -60,7 +60,7 @@ def execute_gemini(prompt: str) -> tuple[str, str | None]:
         return "", f"Error executing gemini: {str(e)}"
 
 
-def execute_copilot(prompt: str) -> tuple[str, str | None]:
+def execute_copilot(prompt: str) -> Tuple[str, Optional[str]]:
     """Execute copilot CLI command"""
     try:
         result = subprocess.run(
