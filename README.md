@@ -4,7 +4,6 @@ Python FastAPI 서버로 로컬에 설치된 LLM CLI 도구들을 API로 호출�
 
 ## 지원 모델
 
-- **codex** - `codex exec "prompt"`
 - **claude** - `claude -p "prompt"`
 - **gemini** - `gemini -p "prompt"`
 - **copilot** - `copilot -p "prompt"`
@@ -73,7 +72,7 @@ curl -X POST http://localhost:12341/generate \
 **요청 본문:**
 ```json
 {
-  "model": "codex" | "claude" | "gemini" | "copilot",
+  "model": "claude" | "gemini" | "copilot",
   "prompt": "your prompt here"
 }
 ```
@@ -88,17 +87,6 @@ curl -X POST http://localhost:12341/generate \
 ```
 
 ## 예시
-
-### Codex 사용
-
-```bash
-curl -X POST http://localhost:12341/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "codex",
-    "prompt": "Write a Python function to calculate fibonacci"
-  }'
-```
 
 ### Claude 사용
 
@@ -152,7 +140,7 @@ print(result["output"])
 
 ## 주의사항
 
-- 각 CLI 도구(codex, claude, gemini, copilot)가 시스템 PATH에 설치되어 있어야 합니다
+- 각 CLI 도구(claude, gemini, copilot)가 시스템 PATH에 설치되어 있어야 합니다
 - 명령어 실행 타임아웃은 60초로 설정되어 있습니다
 - 에러 발생 시 HTTP 500 상태 코드와 함께 에러 메시지가 반환됩니다
 

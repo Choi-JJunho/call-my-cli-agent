@@ -9,34 +9,13 @@ app = FastAPI(title="Local LLM API Server")
 
 class PromptRequest(BaseModel):
     prompt: str
-    model: Literal["codex", "claude", "gemini", "copilot"]
+    model: Literal["claude", "gemini", "copilot"]
 
 
 class LLMResponse(BaseModel):
     model: str
     output: str
     error: str | None = None
-
-
-def execute_codex(prompt: str) -> tuple[str, str | None]:
-    """Execute codex CLI command"""
-    try:
-        result = subprocess.run(
-            ["codex", "exec", prompt],
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-        if result.returncode == 0:
-            return result.stdout.strip(), None
-        else:
-            return "", result.stderr.strip()
-    except subprocess.TimeoutExpired:
-        return "", "Command timed out after 60 seconds"
-    except FileNotFoundError:
-        return "", "codex command not found. Please ensure it's installed and in PATH"
-    except Exception as e:
-        return "", f"Error executing codex: {str(e)}"
 
 
 def execute_claude(prompt: str) -> tuple[str, str | None]:
@@ -106,7 +85,7 @@ def execute_copilot(prompt: str) -> tuple[str, str | None]:
 def root():
     return {
         "message": "Local LLM API Server",
-        "available_models": ["codex", "claude", "gemini", "copilot"],
+        "available_models": ["claude", "gemini", "copilot"],
         "endpoints": {
             "/generate": "POST - Generate text from a prompt",
             "/health": "GET - Check server health"
@@ -124,7 +103,6 @@ def generate(request: PromptRequest):
     """Generate text using the specified LLM model"""
 
     executors = {
-        "codex": execute_codex,
         "claude": execute_claude,
         "gemini": execute_gemini,
         "copilot": execute_copilot
