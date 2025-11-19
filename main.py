@@ -25,6 +25,7 @@ def execute_claude(prompt: str) -> Tuple[str, Optional[str]]:
             ["claude", "-p", prompt],
             capture_output=True,
             text=True,
+            stdin=subprocess.DEVNULL,
             timeout=60
         )
         if result.returncode == 0:
@@ -46,6 +47,7 @@ def execute_gemini(prompt: str) -> Tuple[str, Optional[str]]:
             ["gemini", "-p", prompt],
             capture_output=True,
             text=True,
+            stdin=subprocess.DEVNULL,
             timeout=60
         )
         if result.returncode == 0:
@@ -67,6 +69,7 @@ def execute_copilot(prompt: str) -> Tuple[str, Optional[str]]:
             ["copilot", "-p", prompt],
             capture_output=True,
             text=True,
+            stdin=subprocess.DEVNULL,
             timeout=60
         )
         if result.returncode == 0:
